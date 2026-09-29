@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABESHOES — Toko Sepatu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="top">Gratis ongkir untuk pembelian di atas Rp500.000 • ABESHOES</div>
+<header><nav class="nav"><a href="#" class="logo" aria-label="ABESHOES">
+  <svg class="logo-mark" viewBox="0 0 64 44" aria-hidden="true">
+    <defs>
+      <linearGradient id="shoeGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff4d6d"/>
+        <stop offset="50%" stop-color="#7c3aed"/>
+        <stop offset="100%" stop-color="#06b6d4"/>
+      </linearGradient>
+    </defs>
+    <path d="M7 29c8-2 14-9 17-20l10 7c3 2 6 5 11 7l9 3c3 1 4 5 1 7-5 4-19 4-31 3L9 35c-4-1-5-4-2-6Z" fill="url(#shoeGrad)"/>
+    <path d="M24 13l8 6M20 18l9 5M16 23l8 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
+    <path d="M11 32c12 3 31 4 43 0" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+  </svg>
+  <span>ABE<span class="logo-accent">SHOES</span></span>
+</a><a href="#produk">Produk</a><a href="#tentang">Tentang</a><div class="spacer"></div><div class="search-wrap"><input id="search" class="search" placeholder="Cari sepatu..." autocomplete="off"><span class="search-icon">⌕</span></div><button class="cart" onclick="toggleCart()">🛒<span id="count" class="badge">0</span></button></nav></header>
+
+<section class="hero"><div><div style="font-weight:800;letter-spacing:2px">NEW COLLECTION</div><h1>STEP INTO<br>YOUR STYLE.</h1><p>Temukan sepatu favoritmu dari koleksi pilihan ABESHOES. Gaya, kenyamanan, dan kualitas untuk setiap langkah.</p><a class="cta" href="#produk">Belanja Sekarang →</a></div><div class="hero-art">👟</div></section>
+
+<main class="wrap" id="produk">
+<div class="section-head"><div><h2>Koleksi Sepatu</h2><span id="catalogCount">Produk pilihan ABESHOES • 11 produk</span></div></div>
+<div class="filters"><button class="chip active" data-brand="Semua">Semua</button><button class="chip" data-brand="Adidas">Adidas</button><button class="chip" data-brand="Puma">Puma</button><button class="chip" data-brand="Nike">Nike</button><button class="chip" data-brand="Converse">Converse</button></div>
+<div id="grid" class="grid"></div>
+<div class="about" id="tentang"><h2>Tentang ABESHOES</h2><p>ABESHOES adalah konsep toko sepatu online yang menghadirkan berbagai pilihan sneakers dan lifestyle shoes untuk kebutuhan sehari-hari. Website ini adalah prototype dan produk di bawah merupakan data contoh.</p><div class="footer-contact"><a href="https://wa.me/628998328999" target="_blank" rel="noopener">💬 WhatsApp: +62 899-8328-999</a><a href="tel:+628998328999">📞 Telepon: +62 899-8328-999</a><a href="mailto:bryan20884@gmail.com">✉️ Email: bryan20884@gmail.com</a></div></div>
+</main>
+<footer><div class="footer-logo">ABESHOES</div><div>Sepatu pilihan untuk setiap langkah.</div><div style="margin-top:10px">© 2026 ABESHOES • Toko Sepatu Online</div></footer>
+
+<aside id="drawer" class="drawer"><button class="close" onclick="toggleCart()">×</button><h2>Keranjang</h2><div id="cartItems" class="cart-list"></div><div class="total"><span>Total</span><span id="total">Rp0</span></div><button class="checkout" onclick="checkout()">Checkout</button></aside>
+
+<script>
+const products=[
+{id:1,brand:"Adidas",name:"Samba OG — Cloud White / Core Black",price:1849000,img:"https://assets.adidas.com/images/w_500%2Cf_auto%2Cq_auto/3bbecbdf584e40398446a8bf0117cf62_9366/Samba_OG_Shoes_White_B75806_01_00_standard.jpg"},
+{id:2,brand:"Adidas",name:"Samba OG — Core Black / Off White",price:2299000,img:"https://assets.adidas.com/images/w_940%2Cf_auto%2Cq_auto/4c70105150234ac4b948a8bf01187e0c_9366/B75807_01_standard.jpg"},
+{id:3,brand:"Adidas",name:"Ultraboost Light — Crystal White / Dark Blue",price:2499000,img:"https://assets.adidas.com/images/w_1880%2Cf_auto%2Cq_auto/5687409544144b2da693f4be095ae89a_9366/ID3285_HM5.jpg"},
+{id:8,brand:"Puma",name:"RS-X Efekt — White / Black",price:1799000,img:"https://asset.snipes.com/images/f_auto%2Cq_80%2Cd_fallback-sni.png/b_rgb%3Af8f8f8%2Cc_pad%2Cw_390%2Ch_390/dpr_1.0/02280532_2/puma-rs-x-efekt-bia%C5%82y-28169-2"},
+{id:12,brand:"Nike",name:"Air Force 1 '07 — White / White",price:1899000,img:"https://static.nike.com/a/images/t_web_pdp_936_v2/f_auto%2Cu_9ddf04c7-2a9a-4d76-add1-d15af8f0263d%2Cc_scale%2Cfl_relative%2Cw_1.0%2Ch_1.0%2Cfl_layer_apply/b7d9211c-26e7-431a-ac24-b0540fb3c00f/AIR%2BFORCE%2B1%2B%2707.png"},
+{id:13,brand:"Nike",name:"Air Force 1 '07 — White / Black",price:1999000,img:"https://re-markt.de/media/image/product/28700/md/nike-air-force-1-07-eur-40-5-sneaker-klassisches-design-atmu.jpg"},
+{id:14,brand:"Nike",name:"Air Max 90 — White / Black",price:2199000,img:"https://static.nike.com/a/images/q_auto:eco/t_product_v1/f_auto/dpr_1.0/h_599,c_limit/u_9ddf04c7-2a9a-4d76-add1-d15af8f0263d,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/eb8e4ae3-7488-4b5f-8508-3569f59e9c44/NIKE+AIR+MAX+90.png"},
+{id:15,brand:"Converse",name:"Chuck 70 — Black / Black / Egret",price:1399000,img:"https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dw10f77af3/images/a_107/162050C_A_107X1.jpg?strip=false&sw=964"},
+{id:16,brand:"Converse",name:"Chuck 70 — Parchment / Brown / Egret",price:1399000,img:"https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dw800791be/images/a_107/162053C_A_107X1.jpg?strip=false&sw=964"},
+{id:18,brand:"Converse",name:"Run Star Hike — Black / White / Gum",price:1699000,img:"https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwabd90c97/images/a_107/166800C_A_107X1.jpg?strip=false&sw=964"},
+{id:19,brand:"Converse",name:"Chuck 70 Low — Black / Black / Egret",price:1349000,img:"https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwf79c10b0/images/a_107/162058C_A_107X1.jpg?strip=false&sw=964"}
+];
+
+let cart=JSON.parse(localStorage.getItem("abeshoes_cart")||"[]"), brand="Semua";
+const rupiah=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n);
+const save=()=>localStorage.setItem("abeshoes_cart",JSON.stringify(cart));
+const toast=(msg)=>{const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)};
+
+function render(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const list=products.filter(p=>(brand==="Semua"||p.brand===brand)&&(`${p.brand} ${p.name}`.toLowerCase().includes(q)));
+ document.getElementById("catalogCount").textContent=`Menampilkan ${list.length} dari ${products.length} produk`;
+ document.getElementById("grid").innerHTML=list.map(p=>`
+ <article class="card">
+   <button class="quick" title="Tambah ke keranjang" onclick="add(${p.id})">♡</button>
+   <div class="pic"><img src="${p.img}" alt="${p.brand} ${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="fallback" style="display:none">
+    <svg viewBox="0 0 120 90" width="150" height="110" aria-label="ABESHOES">
+      <defs><linearGradient id="fallbackGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff4d6d"/><stop offset="50%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#06b6d4"/>
+      </linearGradient></defs>
+      <path d="M14 60c15-3 27-18 32-42l19 13c7 5 12 11 21 15l18 6c7 2 8 10 2 15-10 8-38 8-61 6l-24-3c-8-1-12-6-7-10Z" fill="url(#fallbackGrad)"/>
+      <path d="M45 22l15 12M39 31l17 10M33 40l16 8" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <path d="M22 64c24 6 57 7 81 0" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+    </svg>
+  </span></div>
+   <div class="info"><div class="brand">${p.brand}</div><div class="name">${p.name}</div>
+   <div class="row"><span class="price">${rupiah(p.price)}</span><button class="add" onclick="add(${p.id})">+ Keranjang</button></div></div>
+ </article>`).join("")||'<div class="empty" style="grid-column:1/-1">Produk tidak ditemukan. Coba kata kunci lain.</div>';
+}
+function add(id){
+ const x=cart.find(i=>i.id===id);x?x.qty++:cart.push({id,qty:1});
+ save();renderCart();toast("Produk ditambahkan ke keranjang");
+}
+function changeQty(id,delta){
+ const x=cart.find(i=>i.id===id);if(!x)return;x.qty+=delta;
+ if(x.qty<=0)cart=cart.filter(i=>i.id!==id);save();renderCart();
+}
+function renderCart(){
+ document.getElementById("count").textContent=cart.reduce((a,b)=>a+b.qty,0);
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map(i=>{
+  const p=products.find(x=>x.id===i.id);
+  return `<div class="cart-item"><div class="mini"><img src="${p.img}" alt="${p.brand} ${p.name}" onerror="this.src='https://dummyimage.com/140x140/f0f0f0/111&text=ABESHOES'"></div>
+  <div style="flex:1"><b>${p.brand} ${p.name}</b><div style="margin-top:4px">${rupiah(p.price)}</div>
+  <div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><span>${i.qty}</span><button onclick="changeQty(${p.id},1)">+</button>
+  <button onclick="changeQty(${p.id},-${i.qty})" style="border:0;background:none;color:#c00;cursor:pointer;margin-left:4px">Hapus</button></div></div></div>`
+ }).join(""):'<div class="empty">Keranjang masih kosong.<br><small>Yuk pilih sepatu favoritmu.</small></div>';
+ document.getElementById("total").textContent=rupiah(cart.reduce((a,i)=>a+products.find(p=>p.id===i.id).price*i.qty,0));
+}
+function toggleCart(){document.getElementById("drawer").classList.toggle("open");renderCart()}
+function checkout(){
+ if(!cart.length){toast("Keranjang masih kosong");return}
+ alert("Checkout berhasil! , tahap berikutnya bisa dihubungkan ke WhatsApp ya guys.");
+}
+document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{brand=b.dataset.brand;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()});
+document.getElementById("search").addEventListener("input",render);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("drawer").classList.remove("open")});
+render();renderCart();
+</script>
+<div id="toast" class="toast"></div></body>
+</html><script src="script.js"></script>
